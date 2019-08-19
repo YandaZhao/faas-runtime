@@ -1,0 +1,25 @@
+functions:
+  hello1:
+    handler: entry.api.a
+    events:
+      - http:
+          path: /a
+          method:
+            - GET
+            - POST
+  hello2:
+      handler: entry.api.b
+      events:
+        - http:
+            path: /b
+            method:
+              - GET
+              - POST
+  hello3:
+      handler: entry.api.c
+      events:
+        - http:
+            path: /c
+            method:
+              - GET
+              - POST

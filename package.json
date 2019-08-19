@@ -1,0 +1,29 @@
+{
+  "name": "faas-runtime",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ykfe/faas-runtime.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ykfe/faas-runtime/issues"
+  },
+  "homepage": "https://github.com/ykfe/faas-runtime#readme",
+  "dependencies": {
+    "egg-core": "^4.17.2",
+    "get-value": "^3.0.1",
+    "js-yaml": "^3.13.1",
+    "koa": "^2.7.0",
+    "koa-compose": "^4.1.0",
+    "koa-router": "^7.4.0",
+    "require-dir": "^1.2.0"
+  }
+}
