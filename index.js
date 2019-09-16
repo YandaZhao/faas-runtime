@@ -6,14 +6,10 @@
 const getApp = require('./app')
 const bindRouters = require('./router')
 
-module.exports = function (framework, runtimeMiddleware) {
-  const app = getApp(framework, runtimeMiddleware)
-
+module.exports = function (framework, runtimeMiddleware, config = {}) {
+  const app = getApp(framework, runtimeMiddleware, config)
   return function (faasFolder) {
-    // mount functions with router
-    // faasFolder/f.yaml
     bindRouters(app, faasFolder)
-
     return app
   }
 }

@@ -1,16 +1,16 @@
-module.exports = function getApp (framework, runtimeMiddleware) {
+module.exports = function getApp (framework, runtimeMiddleware, config = {}) {
   const _framework = framework || 'koa'
   let app = null
 
   switch (_framework) {
     case 'egg':
-      app = getEggApp()
+      app = getEggApp(config)
       break
     case 'koa':
-      app = getKoaApp()
+      app = getKoaApp(config)
       break
     default:
-      app = getKoaApp()
+      app = getKoaApp(config)
   }
   app.framework = _framework
   app.runtime = runtimeMiddleware
@@ -20,15 +20,12 @@ module.exports = function getApp (framework, runtimeMiddleware) {
 
 function getKoaApp (config) {
   const Koa = require('koa')
-  const app = new Koa()
+  const app = new Koa(config)
   return app
 }
 
 function getEggApp (config) {
   const Application = require('egg-core').EggCore
-  const app = new Application({
-    // baseDir: process.cwd() + '/app'
-  })
-
+  const app = new Application(config)
   return app
 }

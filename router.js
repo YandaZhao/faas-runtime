@@ -1,9 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
-const compose = require('koa-compose')
-const requireDir = require('require-dir')
 const cwd = process.cwd()
+const yamlFile = path.join(cwd, './f.yaml')
 
 module.exports = function bindRouters (app, folder) {
   switch (app.framework) {
@@ -23,46 +22,32 @@ module.exports = function bindRouters (app, folder) {
 
 function bindEggRouter (app, folder) {
   const { router } = app
-  const yamlFile = path.join(cwd, './f.yaml')
   const content = getYamlConfig(yamlFile)
   for (const k in content.functions) {
     const func = content.functions[k]
-    func.obj = {}
-    const http = func.events[0].http
-    http.method.forEach(element => {
-      router[element.toLowerCase()](http.path, app.runtime, require(path.join(path.join(cwd, folder) + '/', func.handler.replace('entry.', '').replace(/\./g, '/'))))
-    })
+    bindRouterHandler(app, folder, func, router)
   }
 }
 
 function bindKoaRouter (app, folder) {
-  const files = fs.readdirSync(path.join(cwd, folder))
   const Router = require('koa-router')
   const router = new Router()
-
-  for (const idx in files) {
-    const file = files[idx]
-
-    if (file.indexOf('.') === -1) {
-      const dir = requireDir(path.join(cwd, folder + '/' + file), { recurse: true })
-      const yamlFile = path.join(cwd, folder + '/' + file + '/f.yaml')
-
-      const content = getYamlConfig(yamlFile)
-      for (const k in content.functions) {
-        const func = content.functions[k]
-        func.obj = dir
-        const http = func.events[0].http
-
-        http.method.forEach(element => {
-          router[element.toLowerCase()](http.path, compose([app.runtime, processMiddleware(func)]))
-        })
-      }
-    }
+  const content = getYamlConfig(yamlFile)
+  for (const k in content.functions) {
+    const func = content.functions[k]
+    bindRouterHandler(app, folder, func, router)
   }
-
   app
     .use(router.routes())
     .use(router.allowedMethods())
+}
+
+function bindRouterHandler (app, folder, func, router) {
+  const http = func.events[0].http
+  const handler = path.join(cwd, folder + func.handler.replace('entry.', ''))
+  http.method.forEach(element => {
+    router[element.toLowerCase()](http.path, app.runtime, require(handler))
+  })
 }
 
 function getYamlConfig (yamlFile) {
@@ -71,13 +56,6 @@ function getYamlConfig (yamlFile) {
     const doc = yaml.safeLoad(fs.readFileSync(yamlFile, 'utf8'))
     return doc
   } catch (e) {
-    console.log(e)
+    console.log('getYamlConfig error' + e)
   }
-}
-
-function processMiddleware (func) {
-  const key = func.handler.replace('entry.', '')
-  const get = require('get-value')
-
-  return get(func.obj, key)
 }
