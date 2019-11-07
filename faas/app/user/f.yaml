@@ -1,9 +1,0 @@
-functions:
-  hello1:
-    handler: entry.index
-    events:
-      - http:
-          path: /user/:id
-          method:
-            - GET
-            - POST

@@ -1,0 +1,16 @@
+functions:
+  json:
+    handler: api.json.handler
+    events:
+      - http:
+          path: /
+          method:
+            - GET
+  user:
+    handler: api.user.handler
+    events:
+      - http:
+          path: /user/:id
+          method:
+            - GET
+            - POST

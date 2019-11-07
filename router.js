@@ -2,9 +2,12 @@ const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
 const cwd = process.cwd()
-const yamlFile = path.join(cwd, './f.yaml')
+
+let yamlFile
 
 module.exports = function bindRouters (app, folder) {
+  yamlFile = path.join(cwd, folder, './f.yml')
+
   switch (app.framework) {
     case 'egg':
       // egg
@@ -43,10 +46,13 @@ function bindKoaRouter (app, folder) {
 }
 
 function bindRouterHandler (app, folder, func, router) {
+  // api.user.handler
   const http = func.events[0].http
-  const handler = path.join(cwd, folder + func.handler.replace('entry.', ''))
+  const handlerArr = func.handler.split('.')
+  const handerFunc = handlerArr.pop()
+  const handlerPath = path.join(cwd, folder, handlerArr.join('/'))
   http.method.forEach(element => {
-    router[element.toLowerCase()](http.path, app.runtime, require(handler))
+    router[element.toLowerCase()](http.path, app.runtime, require(handlerPath)[handerFunc])
   })
 }
 
