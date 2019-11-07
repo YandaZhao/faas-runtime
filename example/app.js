@@ -1,11 +1,5 @@
-const App = require('..')('koa', function (ctx, next) {
-  ctx.rpc = function () {
-    console.log('rpc')
-  }
-  console.log('before')
-  return next().then(function () {
-    console.log('next')
-  })
+const App = require('..')('koa', async function (ctx, next) {
+  await next()
 })
 
 const app = new App('./')

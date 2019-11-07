@@ -8,20 +8,7 @@ let content
 module.exports = function bindRouters (app, folder) {
   const yamlFile = path.join(cwd, folder, './f.yml')
   content = getYamlConfig(app, yamlFile)
-
-  switch (app.framework) {
-    case 'egg':
-      // egg
-      bindEggRouter(app, folder)
-      break
-    case 'koa':
-      // koa
-      bindKoaRouter(app, folder)
-      break
-    default:
-      // 默认
-      bindKoaRouter(app, folder)
-  }
+  app.framework === 'egg' ? bindEggRouter(app, folder) : bindKoaRouter(app, folder)
 }
 
 function bindEggRouter (app, folder) {
