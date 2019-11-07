@@ -1,10 +1,9 @@
 const bindRouters = require('./router')
 
 module.exports = function getApp (framework, runtimeMiddleware, config = {}) {
-  const _framework = framework || 'koa'
-  const app = _framework === 'egg' ? getEggApp(config) : getKoaApp(config)
+  const app = framework === 'egg' ? getEggApp(config) : getKoaApp(config)
 
-  app.framework = _framework
+  app.framework = framework
   app.runtime = runtimeMiddleware
   app.faasConfig = config
 
