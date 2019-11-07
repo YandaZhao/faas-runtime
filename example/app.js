@@ -1,4 +1,4 @@
-const App = require('..')('egg', function (ctx, next) {
+const App = require('..')('koa', function (ctx, next) {
   ctx.rpc = function () {
     console.log('rpc')
   }

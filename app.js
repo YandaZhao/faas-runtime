@@ -1,7 +1,6 @@
 module.exports = function getApp (framework, runtimeMiddleware, config = {}) {
   const _framework = framework || 'koa'
   let app = null
-
   switch (_framework) {
     case 'egg':
       app = getEggApp(config)
@@ -21,11 +20,13 @@ module.exports = function getApp (framework, runtimeMiddleware, config = {}) {
 function getKoaApp (config) {
   const Koa = require('koa')
   const app = new Koa(config)
+  app.faasConfig = config
   return app
 }
 
 function getEggApp (config) {
   const Application = require('egg-core').EggCore
   const app = new Application(config)
+  app.faasConfig = config
   return app
 }
