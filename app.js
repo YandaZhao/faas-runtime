@@ -1,4 +1,3 @@
-const bindRouters = require('./router')
 
 module.exports = function getApp (framework, runtimeMiddleware, config = {}) {
   const app = framework === 'egg' ? getEggApp(config) : getKoaApp(config)
