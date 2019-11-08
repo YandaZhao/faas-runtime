@@ -33,7 +33,7 @@ functions:
 ## 如何使用
 
 ```js
-const App = require('..')('egg', function (ctx, next) {
+const App = require('faas-runtime')('egg', function (ctx, next) {
   ctx.rpc = function () {
     console.log('rpc')
   }
