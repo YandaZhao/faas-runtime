@@ -1,5 +1,7 @@
 # faas-runtime
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ykfe/faas-runtime.svg)](https://greenkeeper.io/)
+
 - 支持koa（https://github.com/pillarjs/path-to-regexp）
 - 支持egg（https://eggjs.org/zh-cn/advanced/loader.html#%E6%89%A9%E5%B1%95-loader）
 
