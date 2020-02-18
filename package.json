@@ -21,13 +21,13 @@
     "egg-core": "^4.17.2",
     "js-yaml": "^3.13.1",
     "koa": "^2.7.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^8.0.8"
   },
   "pre-commit": [
     "lint"
   ],
   "devDependencies": {
     "pre-commit": "^1.2.2",
-    "standard": "^13.0.0"
+    "standard": "^14.3.1"
   }
 }
